@@ -21,17 +21,34 @@ function randWordGenerator() {
 function displayCorrectWord() {
     display.innerText = 'Word was' + randomWord;
 }
-function handleKeyboardInput(){
-
+function handleKeyboardInput(evt) {
+    if(
+        !(evt.target.classList.contains('letter')) ||
+        userInput.length === 5    
+    ) return;
+    userInput.push(evt.target.innerText)
+    let rowEl;
+    if(currentTry === 1 ){
+        rowEl = wordOneRow;
+    }else if(currentTry === 2){
+        rowEl = wordTwoRow;
+    }else if(currentTry === 3){
+        rowEl = wordThreeRow;
+    }
+    console.dir(userInput);
+    userInput.forEach((item, idx) => {
+        rowEl[idx].innerText = item
+    }) 
 }
-function handleEnterKey(){
-
+function handleEnterKey() {
+    currentTry++;
 }
-function handleUndoKey(){
-
+function handleUndoKey() {
+    userInput = userInput.slice(0, -1)
+    display.innerText = userInput;
 }
 keyboardElement.addEventListener('click', handleKeyboardInput)
 enterElement.addEventListener('click', handleEnterKey)
 undoElement.addEventListener('click', handleUndoKey)
-
+randWordGenerator();
 
