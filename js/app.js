@@ -60,43 +60,55 @@ function randWordGenerator() {
     return randomWord;
 }
 function displayCorrectWord() {
-    display.innerText = randWordGenerator();
-    return '\nWord was: ' + randWordGenerator();
+    display.innerText = randomWord;
+    return '\nWord was: ' + randomWord;
 }
 
 
 /*----------------------------- Event Listeners -----------------------------*/
 //makes button clickable and limits word to 5letters
 keyboardElement.addEventListener('click', (event) => {
+    function updateDisplay(arr, wRow) {
+        for (let i = 0; i < arr.length; i++) {
+            wRow[i].textContent = arr[i];
+        }
+        userInput = arr.join(''); //array method that takes an array on converts it to a single string
+    }
     if (event.target.classList.contains('letter') && wordOne.length < 5) {
-        wordOne.push(event.target.innerText);
+        wordOne.push(event.target.textContent);
         console.log(wordOne);
         //loop through div class 
         //dynamically set the proper array for what row the user is on
         console.log(currentUserRow)
-        let currentArray, currentWordRow;
-        switch (currentUserRow) {
-            case 1: { 
-                currentArray = wordOne;
-                currentWordRow = wordOneRow; 
-                break
-            }
-            case 2: { 
-                currentArray = wordTwo;
-                currentWordRow = wordTwoRow;
-                break 
-            }
-            case 3: { 
-                currentArray = wordThree;
-                currentWordRow = wordThreeRow;
-                break 
-            }
-        }
-        for (let i = 0; i < currentArray.length; i++) {
-            currentWordRow[i].innerText = currentArray[i];
+        let currentArray;
+        let currentWordRow;
+        //iterate thru each userRow
+        if (currentUserRow === 1) updateDisplay(wordOne, wordOneRow);
+        if (currentUserRow === 2) updateDisplay(wordTwo, wordTwoRow);
+        if (currentUserRow === 3) updateDisplay(wordThree, wordThreeRow);
+        // switch (currentUserRow) {
+        //     case 1: {
+        //         updateDisplay(wordOne, wordOneRow);
+        //         // currentArray = wordOne;
+        //         // currentWordRow = wordOneRow;
+        //         break;
+        //     }
+        //     case 2: {
+        //         updateDisplay(wordTwo, wordTwoRow);
+        //         // currentArray = wordTwo;
+        //         // currentWordRow = wordTwoRow;
+        //         break;
+        //     }
+        //     case 3: {
+        //         updateDisplay(wordThree, wordThreeRow);
+        //         // currentArray = wordThree;
+        //         // currentWordRow = wordThreeRow;
+        //         break;
+        //     }
+        // }
 
-        }
-        userInput = currentArray.join(''); //array method that takes an array on converts it to a single string
+
+
         //display.innerText = userInput;
     }
 })
@@ -105,11 +117,12 @@ keyboardElement.addEventListener('click', (event) => {
 
 //logic to enter the word and have user enter next word 
 enter.addEventListener('click', (event) => {
-    if (guess === 1) {
-        console.log("Player has lost")
-        // enter.removeEventListener('click', event)
-        return display.innerText = displayCorrectWord();
-    }
+    // if (guess === 1) {
+    //     console.log("Player has lost")
+    //     // enter.removeEventListener('click', event)
+    //     // return display.innerText = 
+    //     displayCorrectWord();
+    // }
     //loop to track how many guesses player has
     // if(guess >= 2){ //
     if (userInput.length === 5) {
@@ -124,16 +137,20 @@ enter.addEventListener('click', (event) => {
         }
 
         userInput = '';
+        // switch (guess) {
+        //     //fall through
+        //     case 3:
+        //         currentUserRow += 1;
+        //         break;
+        //     case 2:
+        //         currentUserRow += 1;
+        //         break;
+        // }
     }
+    if(guess === 3)currentUserRow++;
+    if(guess === 2)currentUserRow++;
     //increment the row the user is on
-    switch (guess) {
-        //fall through
-        case 3:
-        case 2: 
-            currentUserRow+=1;
-            break;
-        
-    }
+
     //lose logic. stops user from entering once guess. hits 0?
     // }
     // else{
@@ -145,7 +162,7 @@ enter.addEventListener('click', (event) => {
     // }
 
 })
-//user can backspace
+//allows user can backspace
 undo.addEventListener('click', (event) => {
     userInput = userInput.slice(0, -1)
     display.innerText = userInput;
