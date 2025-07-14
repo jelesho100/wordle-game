@@ -31,6 +31,3 @@ Next Steps
 -   Optimize the way I check which row the user is now. Right now it is hard coded.
 -   Add a delay in the flip animation per letter aka not having the tiles flip at the same time
 -   Add an X button image to the undo button. Like the one wordle has 
-
-Screenshot Link
--   file:///C:/Users/jeles/OneDrive/Pictures/Screenshots/Screenshot%20(2).png
