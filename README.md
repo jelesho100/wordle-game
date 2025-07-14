@@ -6,7 +6,7 @@ Link to Game
 -   https://jelesho100.github.io/wordle-game/
 
 About
--   It is a wordl game
+-   It is a wordle game
 
 Built With
 -   Javascript, HTML, and CSS
