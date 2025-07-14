@@ -6,6 +6,7 @@ const userLetter = document.querySelectorAll('.user-letter')
 const wordOneRow = document.querySelectorAll('.row-one')
 const wordTwoRow = document.querySelectorAll('.row-two')
 const wordThreeRow = document.querySelectorAll('.row-three')
+const gameResult = document.querySelector('#game-result')
 const maxTries = 3;
 const maxWordLength = 5;
 let wordBank = [];
@@ -54,6 +55,10 @@ function updateDisplay() {
 function handleEnterKey() {
     //change array to string
     const stringRandomWord = userInput.join(''); //join array letters to a
+    if(!wordBank.includes(stringRandomWord)) { //confirms user guess is a valid word
+        display.innerText = 'Invalid word. Click undo button 5x';
+        return;
+    }
 
     //iterate throu user input n compar to correct word
     // Create a copy of the random word to track which letters get used
@@ -86,7 +91,7 @@ function handleEnterKey() {
 
     //win logic
     if (stringRandomWord === randomWord) {
-        displayCorrectWord();
+        gameResult.innerText = 'Congrats! You win! ' + displayCorrectWord();
         return;
     }
     if (userInput.length === 5) {
@@ -94,7 +99,7 @@ function handleEnterKey() {
         userInput.length = 0;
         //display lose logic
         if (currentTry > 3) {
-            display.innerText = 'Word was ' + randomWord;
+            gameResult.innerText = 'Word was ' + randomWord;
         }
     }
 
